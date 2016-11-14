@@ -1,0 +1,56 @@
+<form>
+<input type="hidden" name="path" id="key"></input>
+</form>
+
+
+<div class="container">
+	<button onclick="playAudio()" class="btn btn-medium btn-primary">PLAY MUSIC<button>
+	<audio  id="audio"> 
+   		<source id="source" type="audio/mpeg" src="">
+   	</audio>
+</div>
+<script>
+		
+
+
+	function playAudio(){
+		
+		window.AudioContext = window.AudioContext || window.webkitAudioContext;
+		context = new AudioContext();
+		/*
+		$.ajax({
+			type: 'POST',
+			url: '/stream',
+			//path: 'C/Users/Paul/Desktop/CalHacks3/MoodyTunes/sogone.mp3',
+			success: function(response, status, request) {
+				var file = new Blob([response], {type: 'audio/mpeg'});
+				var path = window.URL.createObjectURL(file);
+				console.log(path.toString());
+				document.getElementById('source').src = "" + path.toString();
+				document.getElementById('audio').play();
+			}
+		});
+		*/	
+		
+		io.socket.post('/stream', {}, function (response, jwres){
+			//var audio = document.getElementById('audio');
+			//var file = new Blob([response], {type: 'audio/mpeg'});
+			//var path = window.webkitURL.createObjectURL(file);
+			/*
+			console.log(path.toString());
+			
+			document.getElementById('source').src = "" + path.toString();
+			audio.play();
+			*/
+			source = context.createBufferSource();
+			context.decodeAudioData(Data, function(buffer){
+			    source.buffer = buffer;
+			    source.connect(context.destination); 
+			    source.start(context.currentTime);
+			});
+		});
+		
+	}
+</script>
+
+  

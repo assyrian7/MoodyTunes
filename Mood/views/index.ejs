@@ -1,0 +1,87 @@
+<html>
+
+
+
+<head>
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <style>
+
+
+    	*{
+    		text-align:center;
+    	}
+    	#text{
+    		font-family: sans-serif, 100px;
+    	}
+
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+	<p id="text">Welcome</p>
+
+	<script>
+
+		var text = document.getElementById("text");
+
+		function appear(){
+
+			text.style.transition = "1s";
+			text.style.color = "#000000";
+
+		}
+
+		function printStatus(t){
+			text.innerHtml = t;
+		}
+
+		function intro(){
+
+			clear();
+			printStatus("I am here to analyze you");
+			appear();
+			printStatus("From what I can see, you are");
+			clear();
+		}
+
+		function clear(){
+			text.style.transition = "1s";
+			text.style.color = "rgba(0, 0, 0, 0.0)";
+		}
+
+		function getStatus(){
+
+			var status;
+			var intensity = 0;
+
+			io.socket.post('/mood', {}, function (response, jwres){
+				status = JSON.parse(response);
+			});
+			for(i = 0; i < status.scores.length; i++){
+				if(status.scores[i].value > intensity){
+					intensity = status.scores[i].value;
+					status = status.scores[i];
+				}
+			}
+			printStatus(status);
+
+		}
+
+	</script>
+
+</body>
+
+
+
+</html>

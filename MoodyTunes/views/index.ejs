@@ -1,0 +1,98 @@
+<html>
+
+
+
+<head>
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type"text/javascript" src="/js/dependencies/sails.io.js"></script>
+    <style>
+
+
+    	*{
+    		text-align:center;
+    	}
+    	#text{
+    		font-family: sans-serif, 100px;
+    	}
+
+
+    </style>
+
+</head>
+
+
+
+<body onLoad="intro()">
+
+
+	<p id="text">Welcome</p>
+
+	<script>
+
+		var text = document.getElementById("text");
+		/*
+		function appear(){
+
+			text.style.transition = "9s";
+			text.style.color = "#000000";
+
+		}
+		*/
+		function printStatus(t){
+			text.style.transition = "9s";
+			text.innerHtml = t;
+			text.style.color = "#000000";
+		}
+
+		function intro(text){
+			clear();
+			window.setTimeout(printStatus(text), 1000);
+		}
+
+		function clear(cb){
+			text.style.transition = "9s";
+			text.style.color = "rgba(0, 0, 0, 0.0)";
+		}
+
+		function getStatus(){
+
+			var status;
+			var intensity = 0;
+			var data;
+			/*
+			io.socket.post('/mood', {}, function (response, jwres){
+				console.log(response);
+			});
+			*/
+			if(status){
+				for(i = 0; i < status.scores.length; i++){
+					if(status.scores[i].value > intensity){
+						intensity = status.scores[i].value;
+						status = status.scores[i];
+					}
+				}
+			}
+			printStatus(status, function(){
+
+			});
+
+		}
+		/*
+		window.setInterval(function(){
+			getStatus();
+			clear(function(){
+
+			});
+		}, 5000);
+		*/
+	</script>
+
+</body>
+
+
+
+</html>

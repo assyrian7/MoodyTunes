@@ -1,0 +1,32 @@
+<script src="/js/dependencies/sails.io.js"
+  autoConnect="false"
+  environment="production"
+  headers='{ "x-csrf-token": "<%= typeof _csrf === 'undefined' ? _csrf : '' %>" }'
+></script>
+
+<button onClick="play()">
+	<audio  id="audio" style='display:none;'> 
+	    <source id="source" src="" type="audio/mpeg">
+	</audio>
+</button>
+
+<script>
+
+var file;
+var path;
+var audio = document.getElementById("audio");
+
+function play(){
+
+io.socket.get('/getFile', {}, function (response, jwres){
+	file = new Blob([response], {type: 'audio/mpeg'});
+	path = window.URL.createObjectURL(file);
+	console.log(path);
+			
+});
+audio.getElementsByTagName('SOURCE')[0].src = path.toString();
+audio.play();
+
+}
+
+</script>
