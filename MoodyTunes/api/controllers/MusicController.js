@@ -35,7 +35,7 @@ module.exports = {
 	},
 
 	stream: function(req, res){
-		var path = '/Users/Paul/Desktop/CalHacks3/MoodyTunes/sogone.mp3';
+		var path = '/Users/Paul/Desktop/MoodyTunes/MoodyTunes/sogone.mp3';
 		
 		/*
 		var stat = fs.statSync(path);
